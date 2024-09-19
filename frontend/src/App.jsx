@@ -1,32 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import api from './services/api';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import SignUpPerDet from './pages/SignUpPerDet';
 
-const App = () => {
-  const [data, setData] = useState([]);
+export default function App(){
+  return <BrowserRouter>
+  <Routes>
+    <Route path='/' element={<LandingPage/>} />
+    <Route path='/sign-in' element={<SignIn/>} />
+    <Route path='/sign-up' element={<SignUp/>} />
+    <Route path='/sign-up-detail' element={<SignUpPerDet/>} />
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/data.php'); // PHP endpoint
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
 
-    fetchData();
-  }, []);
-
-  return (
-    <div>
-      <h1>Data from PHP Backend</h1>
-      <ul>
-        {data.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default App;
+  </Routes>
+  
+  </BrowserRouter>
+}
